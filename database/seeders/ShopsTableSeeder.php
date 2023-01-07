@@ -15,21 +15,19 @@ class ShopsTableSeeder extends Seeder
   public function run()
   {
     $param = [
-      "shop_name" => "テスト1",
-      "address" => "東京都aaaaa",
-      "phone" => "123-456-7889",
-      "email" => "abc123@example.com",
-      "detail" => "詳細bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "genre" => "洋食",
+      "name" => "テスト1",
+      "description" => "詳細ccccccccccccccccccccccccccccccc",
+      "area_id" => "1",
+      "genre_id" => "2",
+      "image_url" => "test3333",
     ];
     Shop::create($param);
     $param = [
-      "shop_name" => "テスト2",
-      "address" => "大阪府aaaaa",
-      "phone" => "123-456-7889",
-      "email" => "def456@example.com",
-      "detail" => "詳細ccccccccccccccccccccccccccccccc",
-      "genre" => "中華",
+      "name" => "テスト2",
+      "description" => "詳細ccccccccccccccccccccccccccccccc",
+      "area_id" => "2",
+      "genre_id" => "3",
+      "image_url" => "test",
     ];
     Shop::create($param);
   }

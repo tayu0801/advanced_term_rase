@@ -7,5 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $fillable = [
+    "name",
+    "description",
+    "area_id",
+    "genre_id",
+    "image_url",
+  ];
+
+  public function area()
+  {
+    return $this->belongsTo(Area::class);
+  }
+
+  public function genre()
+  {
+    return $this->belongsTo(Genre::class);
+  }
 }
