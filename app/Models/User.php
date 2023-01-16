@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\CustomVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,10 +18,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $guraded = [
+        'id'
+    ];
+        
     protected $fillable = [
         'name',
         'email',
         'password',
+        'admin',
+        'manager',
     ];
 
     /**
@@ -41,4 +49,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new CustomVerifyEmail());
+    }
+
+    public function reservations() {
+        return $this->hasMany(Reservation::class);
+    }
+    public function favorites() {
+        return $this->hasMany(Favorite::class);
+    }
+    public function shopreviews() {
+        return $this->hasMany(ShopReview::class);
+    }
+    public function shop() {
+        return $this->hasone(Shop::class);
+    }
+
 }

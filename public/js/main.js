@@ -1,75 +1,46 @@
-// 郵便番号から都道府県・市区町村データを取得
-function getAddressData(zip) {
-  return new Promise(function (resolve, reject) {
-    var zipPattern = /^[0-9]{3}-?[0-9]{4}$/;
-    if (!zip.match(zipPattern)) {
-      resolve(0);
-    }
-    const api = "https://zipcloud.ibsnet.co.jp/api/search?zipcode=";
-    const param = zip.replace("-", "");
-    const url = api + param;
-    fetchJsonp(url, {
-      timeout: 1000,
-    }).then((response) => {
-      resolve(response.json());
-    });
-  });
-}
+const target = document.getElementById("menu");
+target.addEventListener("click", () => {
+  target.classList.toggle("open");
+  const nav = document.getElementById("nav");
+  nav.classList.toggle("in");
+});
 
-// Livewireの値セット
-function LivewireUpdateAddress(zip) {
-  Livewire.emitTo("contact-livewire", "updateAddress", zip);
-}
-
-// 同期処理で住所補足を呼び出してLivewireの機能でセット
-async function asyncFunc(zip) {
-  const result = await getAddressData(zip);
-  result !== 0;
-  LivewireUpdateAddress(
-    result.results[0].address1 +
-      result.results[0].address2 +
-      result.results[0].address3
-  );
-}
-
-// 郵便番号の補足本体
-function adjustPostcode(zip) {
-  zip = zip
-    .replace(/[！-～]/g, function (s) {
-      return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
-    })
-    .replace(/[-－﹣−‐⁃‑‒–—﹘―⎯⏤ーｰ─━]/g, "-");
-  if (zip.match(/^([0-9０-９]{7})$/)) {
-    zip = zip.substr(0, 3) + "-" + zip.substr(3);
+document.addEventListener("change", (e) => {
+  if (e.target.matches("[name=date]")) {
+    document.querySelector("#output_date").textContent = e.target.value;
   }
-  return zip;
-}
+});
 
-// 郵便番号の半角変換、住所補足
-function toHalfWidthPostcode(elm) {
-  const inputPostcode = document.getElementById(elm);
-  let isImeSts = false;
-  // componentstartでIMEの開始(日本語入力)を判定
-  inputPostcode.addEventListener("compositionstart", () => {
-    isImeSts = true;
-    inputPostcode.value = adjustPostcode(inputPostcode.value);
-    if (inputPostcode.value.match(/^(\d{3}-{1}\d{4})$/)) {
-      asyncFunc(inputPostcode.value);
-    }
-  });
-  // componentstartでIMEの終了(日本語入力)を判定
-  inputPostcode.addEventListener("compositionend", () => {
-    isImeSts = false;
-  });
-  inputPostcode.addEventListener("keyup", () => {
-    if (!isImeSts) {
-      inputPostcode.value = adjustPostcode(inputPostcode.value);
-      if (inputPostcode.value.match(/^(\d{3}-{1}\d{4})$/)) {
-        asyncFunc(inputPostcode.value);
-      }
-    }
-  });
-}
+document.addEventListener("change", (e) => {
+  if (e.target.matches("[name=time]")) {
+    document.querySelector("#output_time").textContent = e.target.value;
+  }
+});
+
+document.addEventListener("change", (e) => {
+  if (e.target.matches("[name=number]")) {
+    document.querySelector("#output_number").textContent =
+      e.target.value + "人";
+  }
+});
+
+const reviewBtn = document.getElementById("reviewBtn");
+const closeBtn = document.getElementById("closeBtn");
+const modal = document.getElementById("modal");
+reviewBtn.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+closeBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+window.addEventListener("click", (e) => {
+  if (
+    !e.target.closest(".modal__content-inner") &&
+    e.target.id !== "reviewBtn"
+  ) {
+    modal.style.display = "none";
+  }
+});
 
 // 日付の同期処理
 function syncStartDate(elm, sync_elm) {

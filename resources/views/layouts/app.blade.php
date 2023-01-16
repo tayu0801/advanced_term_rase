@@ -1,36 +1,50 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  @if(app('env') == 'production')
+    <link href="{{ secure_asset('css/style.css') }}" rel="stylesheet">
+  @else
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  @endif
+  <title>Rese</title>
+</head>
+<body>
+@yield('header')
+      <div class="header__nav">
+        <nav class="nav" id="nav">
+          @auth
+          <ul class="drawer">
+            <li><a href="/"><span class="drawer">HOME</span></a></li>
+            <li><form action="/logout" method="post">
+              @csrf
+              <input type="submit" class="drawer__logout" value="LOGOUT">
+            </form>
+            </li>
+            <li><a href="/mypage"><span class="drawer">MYPAGE</span></a></li>
+          </ul>
+          @endauth
+          @guest
+          <ul class="drawer">
+            <li><a href="/"><span class="drawer">HOME</span></a></li>
+            <li><a href="/register"><span class="drawer">REGISTRATION</span></a></li>
+            <li><a href="/login"><span class="drawer">LOGIN</span></a></li>
+          </ul>
+          @endguest
+        </nav>
+        <div class="menu" id="menu">
+          <span class="menu__line--top"></span>
+          <span class="menu__line--middle"></span>
+          <span class="menu__line--bottom"></span>
         </div>
-    </body>
+      </div>
+      <a href="/"><h2 class="logo">Rese</h2></a>
+    </div>
+@yield('content')
+  <script src="{{ asset('/js/main.js') }}"></script>
+</body>
 </html>
