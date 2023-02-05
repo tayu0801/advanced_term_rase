@@ -104,25 +104,14 @@ public function create(Request $request)
     $name=$request->name;
     $area_id=$request->area_id;
     $genre_id=$request->genre_id;
-    $detail=$request->detail;
-    $user_id=$request->user_id;
-    if($genre_id == 1)
-        $image="img/sushi.jpg";
-    if($genre_id == 2)
-        $image="img/yakiniku.jpg";
-    if($genre_id == 3)
-        $image="img/izakaya.jpg";
-    if($genre_id == 4)
-        $imagee="img/italian.jpg";
-    if($genre_id == 5)
-        $image="img/ramen.jpg";
+    $description=$request->description;
+    $image_url="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg";
     $param=[
         'name'=>$name,
         'area_id'=>$area_id,
         'genre_id'=>$genre_id,
-        'detail'=>$detail,
-        'user_id'=>$user_id,
-        'image'=>$image
+        'description'=>$description,
+        'image_url'=>$image_url
     ];
     Shop::create($param);
     $admin = $request->admin;
@@ -141,14 +130,12 @@ public function update(Request $request)
     $name = $request->name;
     $area_id =$request->area_id;
     $genre_id =$request->genre_id;
-    $detail = $request->detail;
-    $user_id = $request->user_id;
+    $description = $request->description;
     $param = [
         'name' => $name,
         'area_id' => $area_id,
         'genre_id'=> $genre_id,
-        'detail'=> $detail,
-        'user_id'=> $user_id,
+        'description'=> $description,
         '_token'=> $request->_token
     ];
     unset($param['_token']);

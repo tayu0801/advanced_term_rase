@@ -32,4 +32,10 @@ Route::get('/thanks', function () {
     return view('thanks');
 })->middleware(['verified'])->name('thanks');
 
+Route::get('/admin', [AdminController::class, 'admin']);
+Route::get('/manager', [AdminController::class, 'manager']);
+Route::post('/manager/add', [AdminController::class, 'create']);
+Route::post('/shop/add', [ShopController::class, 'create']);
+Route::post('/shop/edit', [ShopController::class, 'update']);
+
 require __DIR__.'/auth.php';

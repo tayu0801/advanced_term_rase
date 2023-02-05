@@ -22,7 +22,7 @@ class AdminController extends Controller
         $areas=Area::all();
         $genres=Genre::all();
         $id=Auth::id();
-        $managements=Shop::where('user_id', $id)->get();
+        $managements=Shop::all();
         $reservations=Reservation::all();
         $param=[
             'areas'=>$areas,
@@ -39,35 +39,17 @@ class AdminController extends Controller
         $name = $request ->name;
         $email = $request->email;
         $password = $request->password;
-        $admin = $request->admin;
         $manager = $request->manager;
         $param = [
             'name'=> $name,
             'email' => $email,
             'password' => bcrypt($password),
-            'admin' => $admin,
+            'authority' => 2,
             'manager' => $manager
-            ];    
+            ];
         User::create($param);
-        $admin=Auth::user()->admin;
-        $manager=Auth::user()->manager;
-        $param=[
-            'admin'=>$admin,
-            'manager'=>$manager
-        ];
         return view('/registered', $param);
 	}
 
-
-    public function complete(Request $request)
-    {
-        $admin=Auth::user()->admin;
-        $manager=Auth::user()->manager;
-        $param=[
-            'admin'=>$admin,
-            'manager'=>$manager
-        ];
-        return view('/complete', $param);
-	}
 
 }

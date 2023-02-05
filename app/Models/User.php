@@ -22,13 +22,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $guraded = [
         'id'
     ];
-        
+
     protected $fillable = [
         'name',
         'email',
         'password',
-        'admin',
-        'manager',
     ];
 
     /**

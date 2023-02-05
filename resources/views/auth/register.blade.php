@@ -2,7 +2,7 @@
   <header class="shop__header">
     <div class="header__container flex-item">
 @section('content')
-</header>  
+</header>
     <div class="register__Page">
         <div class="register__container">
         <h4 class="register__title">&emsp;Register</h4>
@@ -32,12 +32,11 @@
                     </span>
                     @endif
                 </div>
-                
                 <input type="submit" name="commit" value="登録" class="register__Btn">
             </form>
-        </div>    
-        <div>    
+        </div>
+        <div>
             <a href="{{ route('login') }}"><p class="acountPage_link">会員登録がお済みの方はこちら</p></a>
-        </div>    
+        </div>
     </div>
 @endsection
