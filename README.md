@@ -12,7 +12,7 @@ Rese
 予約機能、マイページの閲覧はログインを行う必要があります。
 
 ## 他のリポジトリ
-Github：https://github.com/tayu0801/advanced_term_rase
+Github：https://github.com/tayu0801/advanced_term_rese
 
 ## 機能一覧
 会員登録
