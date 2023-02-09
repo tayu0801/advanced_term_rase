@@ -20,10 +20,8 @@ Route::post('/reservation/edit', [ReservationController::class, 'update']);
 Route::post('/reservation/delete', [ReservationController::class, 'remove']);
 Route::get('/done', [ReservationController::class, 'done']);
 
-Route::post('/favorite', [FavoriteController::class, 'create']);
+Route::post('/favorite/add', [FavoriteController::class, 'create']);
 Route::post('/favorite/delete', [FavoriteController::class, 'remove']);
-
-Route::post('/review/add', [ShopReviewController::class, 'create']);
 
 Route::get('/registered', [AdminController::class, 'registered']);
 Route::get('/complete', [AdminController::class, 'complete']);
@@ -31,11 +29,5 @@ Route::get('/complete', [AdminController::class, 'complete']);
 Route::get('/thanks', function () {
     return view('thanks');
 })->middleware(['verified'])->name('thanks');
-
-Route::get('/admin', [AdminController::class, 'admin']);
-Route::get('/manager', [AdminController::class, 'manager']);
-Route::post('/manager/add', [AdminController::class, 'create']);
-Route::post('/shop/add', [ShopController::class, 'create']);
-Route::post('/shop/edit', [ShopController::class, 'update']);
 
 require __DIR__.'/auth.php';

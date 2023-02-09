@@ -13,10 +13,8 @@ use Carbon\Carbon;
 
 class MypageController extends Controller
 {
-
     public function index( Request $request)
     {
-
         $user_id=Auth::id();
         $shops=Shop::all();
         $reservations=Reservation::where('user_id', $user_id)->get();
@@ -30,5 +28,4 @@ class MypageController extends Controller
         ];
         return view('/mypage', $param);
     }
-    
 }
